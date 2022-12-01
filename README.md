@@ -43,3 +43,7 @@ Same as before but with the ability to run using either the sample file or the a
 #### Exe
 
 `advent-of-code.exe run [day] [year] {sample}`
+
+## WIP
+
+This is still very much a WIP, I am in the process of converting old years and days to this format and I wish to continue converting the program to be independent from my puzzles.
