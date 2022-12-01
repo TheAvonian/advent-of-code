@@ -9,7 +9,6 @@ pub fn run_day(input: String) {
     let mut part1 = 0;
 
     let mut passports = input
-        .replace("\r", "")
         .split("\n\n")
         .map(|x| Passport::new(x.to_string()))
         .collect::<Vec<Passport>>();
@@ -153,7 +152,10 @@ pub fn run_day(input: String) {
                                 },
                             }
                         },
-                        _ => ()
+                        _ => {
+                            invalid += 1;
+                            break;
+                        },
                     }
                 },
                 None => {
