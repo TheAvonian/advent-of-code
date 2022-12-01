@@ -1,6 +1,7 @@
 mod year_2020;
 mod year_2021;
 mod year_0;
+mod year_2022;
 pub fn run_day(year: u16, day: u8, input: String) {
     match year {
         0 => {
@@ -47,6 +48,14 @@ pub fn run_day(year: u16, day: u8, input: String) {
                 },
                 24 => {
                     year_2021::day_24::run_day(input);
+                },
+                _ => ()
+            }
+        },
+        2022 => {
+            match day {
+                1 => {
+                    year_2022::day_1::run_day(input);
                 },
                 _ => ()
             }

@@ -35,6 +35,10 @@ fn main() {
         }
         Commands::Run { day, year, sample } => {
             if !Path::new(&format!("./src/inputs/day{}_{}.txt", day, year)).exists() {
+                println!(
+                    "PLEASE MAKE FILE './src/inputs/day{}_{}.txt' CONTAIN THE PROPER PUZZLE INPUT.",
+                    day, year
+                );
                 return;
             }
             let str_input = match sample {
@@ -44,6 +48,13 @@ fn main() {
                 }
                 _ => fs::read_to_string(format!("./src/inputs/day{}_{}.txt", day, year)).unwrap(),
             };
+
+            if str_input.is_empty() {
+                println!(
+                    "There is no puzzle input in file 'src/inputs/day{}_{}.txt'.",
+                    day, year
+                );
+            }
 
             run_day(year as u16, day as u8, str_input.replace("\r", ""));
         }
