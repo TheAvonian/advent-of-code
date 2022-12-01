@@ -1,5 +1,3 @@
-#![allow(dead_code, unused)]
-
 pub fn run_day(input: String) {
     let mut part1 = 0;
 
@@ -33,7 +31,7 @@ pub fn run_day(input: String) {
         passwords.push(password);
     }
 
-    for x in (0..passwords.len()) {
+    for x in 0..passwords.len() {
         if part1_predicate(letters[x], passwords[x], lows[x], highs[x]) {
             part1 += 1;
         }
@@ -73,7 +71,7 @@ pub fn run_day(input: String) {
 
     let mut part2 = 0;
 
-    for x in (0..passwords.len()) {
+    for x in 0..passwords.len() {
         if part2_predicate(letters[x], passwords[x], lows[x], highs[x]) {
             part2 += 1;
         }

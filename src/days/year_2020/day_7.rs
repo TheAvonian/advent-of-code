@@ -1,10 +1,7 @@
-#![allow(dead_code, unused)]
-
 use iter_tools::Itertools;
 use std::collections::HashMap;
 
 pub fn run_day(input: String) {
-    let mut part1 = 0;
 
     let lines = input.split('\n').collect::<Vec<&str>>();
 
@@ -37,7 +34,6 @@ pub fn run_day(input: String) {
             bag_name.clone(),
             Bag {
                 holds: bag_map,
-                name: bag_name,
             },
         );
     }
@@ -58,7 +54,7 @@ fn get_what_holds(
 ) -> Vec<String> {
     if bags
         .iter()
-        .filter(|(x, y)| y.holds.contains_key(&current_bag))
+        .filter(|(_x, y)| y.holds.contains_key(&current_bag))
         .count()
         == 0
     {
@@ -68,7 +64,7 @@ fn get_what_holds(
     }
 
     bags.iter()
-        .filter(|(x, y)| y.holds.contains_key(&current_bag))
+        .filter(|(_x, y)| y.holds.contains_key(&current_bag))
         .map(|b| {
             let mut new_bags = all_bags.clone();
             new_bags.push(b.0.clone());
@@ -89,6 +85,5 @@ fn get_children_bags(bags: &HashMap<String, Bag>, current_bag: String) -> i32 {
 
 #[derive(Debug)]
 struct Bag {
-    name: String,
     holds: HashMap<String, i32>,
 }

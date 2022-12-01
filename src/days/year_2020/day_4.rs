@@ -1,14 +1,10 @@
-#![allow(dead_code, unused)]
-
 use std::collections::BTreeMap;
 
 pub fn run_day(input: String) {
 
     let passport_values = vec!["byr","iyr","eyr","hgt","hcl","ecl","pid","cid"];
 
-    let mut part1 = 0;
-
-    let mut passports = input
+    let passports = input
         .split("\n\n")
         .map(|x| Passport::new(x.to_string()))
         .collect::<Vec<Passport>>();
@@ -31,7 +27,7 @@ pub fn run_day(input: String) {
         }
     }
 
-    part1 = passports.len() - invalid;
+    let part1 = passports.len() - invalid;
     println!("Part 1: {}", part1);
 
     let mut invalid = 0;
@@ -166,7 +162,7 @@ pub fn run_day(input: String) {
         }
     }
 
-    let mut part2 = passports.len() - invalid;
+    let part2 = passports.len() - invalid;
     println!("Part 2: {}", part2);
 }
 

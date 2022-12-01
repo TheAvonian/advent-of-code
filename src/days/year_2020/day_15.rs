@@ -1,5 +1,3 @@
-#![allow(dead_code, unused)]
-
 use std::{collections::HashMap, time::Instant};
 
 pub fn run_day(input: String) {
@@ -14,8 +12,8 @@ pub fn run_day(input: String) {
     let mut game = Game::new(&input_vec);
 
     let now = Instant::now();
-    let mut max = 2020;
-    for x in (size + 1..=max) {
+    let max = 2020;
+    for x in size + 1..=max {
         part1 = game.take_turn(x as i32);
     }
     let elapsed_time = now.elapsed();
@@ -27,9 +25,9 @@ pub fn run_day(input: String) {
 
     let mut part2 = 0;
 
-    let mut new_max = 30000000;
+    let new_max = 30000000;
 
-    for x in (max + 1..=new_max) {
+    for x in max + 1..=new_max {
         part2 = game.take_turn(x as i32);
         /* if x % 10000 == 0 {
             println!("{0:<10}{1:>5.2}%",part2, x as f32 / new_max as f32 * 100.0);

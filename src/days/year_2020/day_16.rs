@@ -1,10 +1,15 @@
-#![allow(dead_code, unused)]
+
+///
+/// NOT DONE
+/// 
 
 pub fn run_day(input: String) {
     let mut predicates: Vec<Box<dyn FnMut(i32) -> bool>> = Vec::new();
 
     let binding = input.replace("\r", "");
     let all_lines: Vec<&str> = binding.split("\n").collect();
+
+    let mut done_ones = Vec::new();
 
     let mut part1 = 0;
 
@@ -50,85 +55,146 @@ pub fn run_day(input: String) {
 
         //println!("{first_low:>5}-{first_high:<5} || {second_low:>5}-{second_high:<5}");
 
-        let split_line = (move |t: i32| {
+        let split_line = move |t: i32| {
             (t <= first_high && t >= first_low) || (t <= second_high && t >= second_low)
-        });
-        predicates.push(Box::from(split_line));
+        };
+        let b = Box::from(split_line);
+        predicates.push(b);
     }
     let index = all_lines
         .iter()
         .position(|&y| y.contains(&"tickets:"))
         .unwrap();
     let mut nearby_ticket_vals = Vec::new();
-    for x in (index + 1..all_lines.len()) {
-        let inner_ticks: Vec<i32> = all_lines[x]
-            .split(',')
-            .map(|t| t.parse::<i32>().unwrap())
-            .collect();
 
-        nearby_ticket_vals.push(inner_ticks);
+    let ticket_size = all_lines[index + 1].split(',').collect::<Vec<&str>>().len();
 
-        /* for y in all_lines[x].split(',') {
-            let new_y = y.chars().take_while(|x|x.is_alphanumeric()).collect::<String>();
+    for x in index + 1..all_lines.len() {
+        for y in all_lines[x].split(',') {
             match y.parse::<i32>() {
                 Ok(val) => nearby_ticket_vals.push(val),
-                Err(err) => (),
+                Err(_) => (),
             };
-        } */
+        } 
     }
 
-    let mut nearby_valid_tickets = Vec::new();
-
-    for x in &nearby_ticket_vals {
-        let mut invalid = false;
-        for ticket in x {
-            let mut l = 0;
-            for pred in &mut predicates {
-                if !pred.as_mut()(*ticket) {
-                    l += 1;
-                    continue;
-                }
-                break;
-            }
-            if l == predicates.len() {
-                part1 += *ticket;
-                invalid = true;
+    for i in &nearby_ticket_vals {
+        let mut l = 0;
+        for pred in &mut predicates {
+            if !pred.as_mut()(*i) {
+                l += 1;
+                continue;
             }
         }
-
-        if !invalid {
-            nearby_valid_tickets.push(x);
+        if l == predicates.len() {
+            part1 += *i;
         }
     }
-
-    //println!("{:?}", nearby_valid_tickets);
 
     println!("Part 1: {}", part1);
 
+    let ticket_tickets = nearby_ticket_vals.chunks(ticket_size);
+
+    let mut tickettts = Vec::new();
+
+    'outer: for tick_in in ticket_tickets.clone() {
+        // crr row swap to col
+        for ro in tick_in {
+            let mut l = 0;
+            for pred in &mut predicates {
+                if !pred.as_mut()(*ro) {
+                    l += 1;
+                }
+            }
+            if l == predicates.len() {
+                continue 'outer;
+            }
+        }
+        tickettts.push(Vec::new());
+        tickettts.last_mut().unwrap().append(&mut tick_in.to_vec());
+    }
+
+    let mut pred_bools: Vec<Vec<TicketBools>> = Vec::new();
+
+    let mut n = 0;
+    for pred in &mut predicates {
+        pred_bools.push(Vec::new());
+        'test: for col_pos in 0..ticket_size {
+            let mut temp = Vec::new();
+            for row in tickettts.iter() {
+                let v = pred.as_mut()(row[col_pos]);
+                if !v {
+                    continue 'test;
+                }
+                temp.push(v);
+            }
+
+            pred_bools.last_mut().unwrap().push(TicketBools {
+                id: col_pos,
+                pred_id: n,
+            });
+        }
+        n += 1;
+    }
+
     let mut part2 = 0;
 
-    let mut predicate_order = Vec::new();
+    let mut removal = Vec::new();
 
-    for col_pos in (0..predicates.len()) {
-        let mut available_preds: Vec<usize> = (0..predicates.len()).collect();
-        for ticket in &nearby_ticket_vals {
-            for pred_index in &available_preds.clone() {
-                if !predicates[*pred_index].as_mut()(ticket[col_pos]) {
-                    available_preds = available_preds
-                        .iter()
-                        .filter(|f| *f != pred_index)
-                        .map(|f| *f)
-                        .collect();
+    while !pred_bools.is_empty() {
+        for i in (0..pred_bools.len()).rev() {
+            if pred_bools[i].len() == 1 {
+                done_ones.push(PredicateBools {
+                    id: pred_bools[i][0].pred_id,
+                    ticket: pred_bools[i][0].clone(),
+                });
+                removal.push(pred_bools[i][0].id);
+                pred_bools.remove(i);
+            }
+        }
+
+        for i in (0..pred_bools.len()).rev() {
+            for x in &removal {
+                for y in (0..pred_bools[i].len()).rev() {
+                    if pred_bools[i][y].id == *x {
+                        pred_bools[i].remove(y);
+                    }
                 }
             }
         }
-        if available_preds.len() > 1 {
-            panic!("why do i have so many options");
-        }
-        predicate_order.push(available_preds[0]);
     }
 
-    println!("{:?}", predicate_order);
+    done_ones.sort_by(|x, y| x.id.cmp(&y.id));
+
+    let my_tick_pos = all_lines
+        .iter()
+        .position(|x| x.contains(&"your ticket"))
+        .unwrap();
+    let my_ticket: Vec<i32> = all_lines
+        .iter()
+        .skip(my_tick_pos + 1)
+        .take(1)
+        .next()
+        .unwrap()
+        .split(',')
+        .map(|x| x.parse::<i32>().unwrap())
+        .collect();
+
+    for x in 0..6 {
+        part2 *= my_ticket[done_ones[x].ticket.id] as i64;
+    }
 
     println!("Part 2: {}", part2);
+}
+
+#[derive(Clone)]
+struct PredicateBools {
+    id: usize,
+    ticket: TicketBools,
+}
+
+#[derive(Clone, Debug)]
+struct TicketBools {
+    id: usize,
+    pred_id: usize,
 }

@@ -1,5 +1,3 @@
-#![allow(dead_code, unused)]
-
 pub fn run_day(input: String) {
     let saturated_input = input.replace("\r", "");
 
@@ -31,7 +29,7 @@ pub fn run_day(input: String) {
             if map.get(x, y) {
                 temp += 1;
             }
-    
+
             x += slope.0;
             y += slope.1;
         }
@@ -42,7 +40,6 @@ pub fn run_day(input: String) {
 }
 
 struct Map {
-    pattern: String,
     // y, x
     grid: Vec<Vec<bool>>,
     height: usize,
@@ -58,7 +55,6 @@ impl Map {
         let height = grid.len();
         let width = grid[0].len();
         Self {
-            pattern,
             grid,
             height,
             width,

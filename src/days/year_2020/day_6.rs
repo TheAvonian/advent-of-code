@@ -1,5 +1,3 @@
-#![allow(dead_code, unused)]
-
 use std::collections::{HashMap, HashSet};
 
 pub fn run_day(input: String) {
@@ -37,7 +35,7 @@ pub fn run_day(input: String) {
                 );
             }
         }
-        for (answer, amount) in answers {
+        for (_answer, amount) in answers {
             if amount == group.people.len() {
                 part2 += 1;
             }

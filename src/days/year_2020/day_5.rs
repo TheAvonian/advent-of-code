@@ -1,8 +1,4 @@
-#![allow(dead_code, unused)]
-
 pub fn run_day(input: String) {
-    let mut part1 = 0;
-
     let saturated_input = input.replace("\r", "");
 
     let mut inputs = saturated_input
@@ -12,7 +8,7 @@ pub fn run_day(input: String) {
 
     inputs.sort_by(|a, b| b.seat_id.cmp(&a.seat_id));
 
-    part1 = inputs[0].seat_id;
+    let part1 = inputs[0].seat_id;
 
     println!("Part 1: {}", part1);
 
@@ -27,7 +23,7 @@ pub fn run_day(input: String) {
     inputs.sort_by(|a, b| b.seat_id.cmp(&a.seat_id));
 
     for seat_num in
-        (inputs.iter().next_back().unwrap().seat_id + 1..inputs.iter().next().unwrap().seat_id)
+        inputs.iter().next_back().unwrap().seat_id + 1..inputs.iter().next().unwrap().seat_id
     {
         if inputs.iter().find(|x| x.seat_id == seat_num).is_none()
             && inputs.iter().find(|x| x.seat_id == seat_num - 1).is_some()
@@ -43,9 +39,7 @@ pub fn run_day(input: String) {
 
 struct Seat {
     row: i32,
-    column: i32,
     seat_id: i32,
-    input: String,
 }
 
 impl Seat {
@@ -79,9 +73,7 @@ impl Seat {
 
         Self {
             row: low,
-            column: low_col,
             seat_id: low * 8 + low_col,
-            input,
         }
     }
 }

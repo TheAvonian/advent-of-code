@@ -9,11 +9,8 @@ use std::{
 
 use clap::{command, Parser, Subcommand, ValueEnum};
 use days::run_day;
-//use scraper::Html;
 use serde::{Deserialize, Serialize};
 
-/* const FIRST_YEAR: u16 = 2015;
-const LAST_YEAR: u16 = 2021; */
 fn main() {
     let cli = Cli::parse();
 
@@ -50,80 +47,7 @@ fn main() {
 
             run_day(year as u16, day as u8, str_input.replace("\r", ""));
         }
-        /* Commands::Stats {} => {
-            let html_sites: Vec<Html> = (FIRST_YEAR..=LAST_YEAR)
-                .map(|year| {
-                    scraper::Html::parse_document(
-                        &reqwest::blocking::get(format!("https://adventofcode.com/{}/stats", year))
-                            .unwrap()
-                            .text()
-                            .unwrap(),
-                    )
-                })
-                .collect();
-
-            let selector_both = scraper::Selector::parse("span.stats-both").unwrap();
-            let selector_first = scraper::Selector::parse("span.stats-firstonly").unwrap();
-
-            let mut year_day_stars = Vec::new();
-
-            let mut i = 0;
-
-            for site in html_sites {
-                let both_vec = &mut site
-                    .select(&selector_both)
-                    .map(|x| x.inner_html().replace(" ", "").parse::<i32>())
-                    .filter(Result::is_ok)
-                    .map(|x| x.unwrap())
-                    .collect::<Vec<i32>>();
-
-                let one_vec = &mut site
-                    .select(&selector_first)
-                    .map(|x| x.inner_html().replace(" ", "").parse::<i32>())
-                    .filter(Result::is_ok)
-                    .map(|x| x.unwrap())
-                    .collect::<Vec<i32>>();
-
-                for x in (1..=both_vec.len()).rev() {
-                    year_day_stars.push(Day {
-                        total: both_vec[both_vec.len() - x] + one_vec[both_vec.len() - x],
-                        day: x as u8,
-                        year: i + FIRST_YEAR,
-                        part_one: one_vec[both_vec.len() - x],
-                        part_two: both_vec[both_vec.len() - x],
-                    });
-                }
-
-                i += 1;
-            }
-
-            let mut string = format!("Year | Day |   Total |    Both |     One\n----------------------------------------\n");
-
-            year_day_stars.sort_by(|a,b| b.total.cmp(&a.total));
-
-            for x in year_day_stars {
-                string += &format!("{:>4} | {:>3} | {:>7} | {:>7} | {:>7}\n", x.year, x.day, x.total, x.part_two, x.part_one);
-            }
-
-            println!("{string}");
-
-            fs::write("./SortedDays.txt", string.as_bytes()).unwrap();
-
-            /* println!(" Day | {:>7} | {:>7} | {:>7}\n-----------------------------------", "Both", "One", "Total");
-
-            for x in 0..both_vec.len() {
-                println!(" {:>3} | {:>7} | {:>7} | {:>7}", x + 1, both_vec[x], one_vec[x], both_vec[x] + one_vec[x]);
-            } */
-        } */
-    } 
-}
-
-struct Day {
-    year: u16,
-    day: u8,
-    total: i32,
-    part_one: i32,
-    part_two: i32,
+    }
 }
 
 #[derive(Parser)]
@@ -143,11 +67,6 @@ enum Commands {
         year: i32,
         sample: Option<bool>,
     },
-    /* Stats {
-        /*
-        stat: StatType,
-        year: Option<i32>, */
-    }, */
 }
 
 #[derive(Clone, ValueEnum)]
