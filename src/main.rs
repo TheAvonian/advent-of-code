@@ -116,7 +116,7 @@ fn create_day(year: u16, day: u8) {
         },
     };
 
-    let mut new_lines = Vec::new();
+    let mut new_lines: Vec<String> = Vec::new();
 
     if json_data.years.contains_key(&year) {
         if !json_data.years.get(&year).unwrap().contains(&day) {

@@ -1,4 +1,4 @@
-use iter_tools::Itertools;
+use itertools::Itertools;
 use std::collections::HashMap;
 
 pub fn run_day(input: String) {
