@@ -1,9 +1,4 @@
-#![allow(dead_code, unused)]
-
 use std::collections::BTreeMap;
-
-use itertools::Itertools;
-use parse_display::{Display, FromStr};
 
 pub fn run_day(input: String) {
     let (map, _) = input.lines().fold(
@@ -53,7 +48,7 @@ pub fn run_day(input: String) {
             (dirs, path)
         },
     );
-    let sizes = map.iter().map(|(_, v)| *v).collect_vec();
+    let sizes = map.iter().map(|(_, v)| *v).collect::<Vec<u64>>();
 
     let part1: u64 = sizes.iter().filter(|&&a| a <= 100_000).sum();
 
@@ -65,4 +60,3 @@ pub fn run_day(input: String) {
 
     println!("Part 2: {}", part2);
 }
-
