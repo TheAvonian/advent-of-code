@@ -17,8 +17,7 @@
 ///
 /// Made a fully generic radix trie though
 /// so that's pretty cool.
-/// 
-
+///
 use std::{
     fmt::Display,
     io,
@@ -47,7 +46,7 @@ where
     <K as Shr<u32>>::Output: BitAnd<u32>,
     <<K as Shr<u32>>::Output as BitAnd<u32>>::Output: PartialEq<u32>,
     K: Copy,
-    V: Clone
+    V: Clone,
 {
     pub fn new() -> Self {
         Self { root: None }
@@ -101,10 +100,7 @@ where
                 }
 
                 current_node = match current_node.as_deref_mut().unwrap() {
-                    Node::Edge {
-                        left: _,
-                        ref mut right,
-                    } => right,
+                    Node::Edge { left: _, right } => right,
                     Node::Leaf { key: _, value: _ } => panic!("NO"),
                 }
             } else {
@@ -134,10 +130,7 @@ where
                 }
 
                 current_node = match current_node.as_deref_mut().unwrap() {
-                    Node::Edge {
-                        ref mut left,
-                        right: _,
-                    } => left,
+                    Node::Edge { left, right: _ } => left,
                     Node::Leaf { key: _, value: _ } => panic!("NO"),
                 };
             }
@@ -147,10 +140,7 @@ where
     fn find_closest_inner(se: &Node<K, V>, find_key: K, depth: u32) -> Option<Node<K, V>> {
         match se {
             Node::Leaf { key: _, value: _ } => Some(se.clone()),
-            Node::Edge {
-                ref left,
-                ref right,
-            } => {
+            Node::Edge { left, right } => {
                 if (find_key >> (31 - depth)) & 1u32 == 0 {
                     if let Some(inn) = left {
                         Self::find_closest_inner(&inn, find_key, depth + 1)
