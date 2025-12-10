@@ -3,9 +3,18 @@
 version = 4
 
 [[package]]
+name = "advent-macros"
+version = "0.1.0"
+dependencies = [
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "advent-of-code"
 version = "0.1.0"
 dependencies = [
+ "advent-macros",
  "clap",
  "itertools",
  "parse-display",

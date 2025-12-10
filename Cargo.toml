@@ -9,6 +9,7 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1"
 itertools = "0.14"
 parse-display = "0.10"
+advent-macros = { path = "crates/advent-macros" }
 
 [profile.dev.package."*"]
 opt-level = 2

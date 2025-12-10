@@ -1,2 +1,3 @@
-pub mod day_23;
-pub mod day_24;
+use advent_macros::gen_pub_days;
+
+gen_pub_days!(2021);
