@@ -6,7 +6,6 @@ use std::{
 };
 
 use itertools::Itertools;
-use split_every::SplitEveryImpl;
 
 pub fn run_day(input: String) {
     let ranges = input

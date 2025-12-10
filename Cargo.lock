@@ -11,7 +11,6 @@ dependencies = [
  "parse-display",
  "serde",
  "serde_json",
- "split-every",
 ]
 
 [[package]]
@@ -104,7 +103,7 @@ dependencies = [
  "heck",
  "proc-macro2",
  "quote",
- "syn 1.0.102",
+ "syn",
 ]
 
 [[package]]
@@ -186,37 +185,10 @@ dependencies = [
  "regex",
  "regex-syntax",
  "structmeta",
- "syn 2.0.111",
+ "syn",
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
-name = "proc-macro-error"
-version = "1.0.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "da25490ff9892aab3fcf7c36f08cfb902dd3e71ca0f9f9517bea02a73a5ce38c"
-dependencies = [
- "proc-macro-error-attr",
- "proc-macro2",
- "quote",
- "syn 1.0.102",
- "version_check",
-]
-
-[[package]]
-name = "proc-macro-error-attr"
-version = "1.0.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a1be40180e52ecc98ad80b184934baf3d0d29f979574e439af5a55274b35f869"
-dependencies = [
- "proc-macro2",
- "quote",
- "version_check",
-]
-
-[[package]]
->>>>>>> 093b3ed7bbd867dc4759452c178a323420e9c371
 name = "proc-macro2"
 version = "1.0.103"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -296,7 +268,7 @@ checksum = "d540f220d3187173da220f885ab66608367b6574e925011a9353e4badda91d79"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 1.0.102",
+ "syn",
 ]
 
 [[package]]
@@ -313,12 +285,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "split-every"
-version = "3.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "979420136b09ea26a6b6bc941eb0ac9c553dd4ad7d8f4fd7c87deb9efa312c13"
-
-[[package]]
 name = "strsim"
 version = "0.11.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -333,7 +299,7 @@ dependencies = [
  "proc-macro2",
  "quote",
  "structmeta-derive",
- "syn 2.0.111",
+ "syn",
 ]
 
 [[package]]
@@ -344,7 +310,7 @@ checksum = "152a0b65a590ff6c3da95cabe2353ee04e6167c896b28e3b14478c2636c922fc"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.111",
+ "syn",
 ]
 
 [[package]]
